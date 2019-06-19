@@ -17,6 +17,7 @@
 		E354BF5D22BAFC1C001E3A9D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E354BF5B22BAFC1C001E3A9D /* LaunchScreen.storyboard */; };
 		E354BF6822BAFC1C001E3A9D /* Cat_a_pultTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E354BF6722BAFC1C001E3A9D /* Cat_a_pultTests.swift */; };
 		E354BF7322BAFC1C001E3A9D /* Cat_a_pultUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E354BF7222BAFC1C001E3A9D /* Cat_a_pultUITests.swift */; };
+		E354BF8122BAFC6C001E3A9D /* Catapult.swift in Sources */ = {isa = PBXBuildFile; fileRef = E354BF8022BAFC6C001E3A9D /* Catapult.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		E354BF6E22BAFC1C001E3A9D /* Cat-a-pultUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Cat-a-pultUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E354BF7222BAFC1C001E3A9D /* Cat_a_pultUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cat_a_pultUITests.swift; sourceTree = "<group>"; };
 		E354BF7422BAFC1C001E3A9D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E354BF8022BAFC6C001E3A9D /* Catapult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Catapult.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,11 +105,9 @@
 		E354BF4B22BAFC1B001E3A9D /* Cat-a-pult */ = {
 			isa = PBXGroup;
 			children = (
-				E354BF4C22BAFC1B001E3A9D /* AppDelegate.swift */,
+				E354BF8222BAFC75001E3A9D /* Swift Files */,
 				E354BF4E22BAFC1B001E3A9D /* GameScene.sks */,
 				E354BF5022BAFC1B001E3A9D /* Actions.sks */,
-				E354BF5222BAFC1B001E3A9D /* GameScene.swift */,
-				E354BF5422BAFC1B001E3A9D /* GameViewController.swift */,
 				E354BF5622BAFC1B001E3A9D /* Main.storyboard */,
 				E354BF5922BAFC1C001E3A9D /* Assets.xcassets */,
 				E354BF5B22BAFC1C001E3A9D /* LaunchScreen.storyboard */,
@@ -132,6 +132,17 @@
 				E354BF7422BAFC1C001E3A9D /* Info.plist */,
 			);
 			path = "Cat-a-pultUITests";
+			sourceTree = "<group>";
+		};
+		E354BF8222BAFC75001E3A9D /* Swift Files */ = {
+			isa = PBXGroup;
+			children = (
+				E354BF4C22BAFC1B001E3A9D /* AppDelegate.swift */,
+				E354BF5222BAFC1B001E3A9D /* GameScene.swift */,
+				E354BF5422BAFC1B001E3A9D /* GameViewController.swift */,
+				E354BF8022BAFC6C001E3A9D /* Catapult.swift */,
+			);
+			path = "Swift Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -270,6 +281,7 @@
 				E354BF5322BAFC1B001E3A9D /* GameScene.swift in Sources */,
 				E354BF5522BAFC1B001E3A9D /* GameViewController.swift in Sources */,
 				E354BF4D22BAFC1B001E3A9D /* AppDelegate.swift in Sources */,
+				E354BF8122BAFC6C001E3A9D /* Catapult.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
