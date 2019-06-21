@@ -9,81 +9,114 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+protocol EventListenerNode {
+    func didMoveToScene()
+}
+protocol InteractiveNode {
+    func interact()
+}
+
+struct PhysicsCategory {
+    static let None: UInt32 = 0
+    static let Cat: UInt32 = 0b1 // 1
+    static let Block: UInt32 = 0b10 // 2
+    static let Edge: UInt32 = 0b100 // 4
+    static let Cannon: UInt32 = 0b1000 // 8
+    static let King: UInt32 = 0b10000 // 16
+}
+
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
-    private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
+    let blueBin = SKSpriteNode()
+    let yellowBin = SKSpriteNode()
+    let label = SKLabelNode()
     
     override func didMove(to view: SKView) {
         
-        // Get label node from scene and store it for use later
-        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
-        if let label = self.label {
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
+        // Playable margin..
+        let maxAspectRatio: CGFloat = 16.0/9.0
+        let maxAspectRatioHeight = size.width / maxAspectRatio
+        let playableMargin: CGFloat = (size.height - maxAspectRatioHeight)/2
+        
+        let playableRect = CGRect(x: 0, y: playableMargin, width: size.width, height: size.height-playableMargin*2)
+        
+        physicsBody = SKPhysicsBody(edgeLoopFrom: playableRect)
+        
+        setupDragLabel()
+        setupTargets()
+    }
+    
+    // We will use this to switch from the menu scene to the game scene
+    var currentScene: Int = 0
+    class func level(sceneNum: Int) -> GameScene? {
+        let scene = GameScene(fileNamed: "Scene\(sceneNum)")!
+        scene.currentScene = sceneNum
+        scene.scaleMode = .aspectFill
+        return scene
+    }
+    
+    func setupDragLabel() {
+        //set the font and position of the label
+        label.fontName = "Arial"
+        label.fontSize = 140
+        label.color = SKColor.black
+        label.position = CGPoint(x: frame.midX, y: frame.midY)
+        
+        // Get a random bool
+        let blue = Bool.random()
+        
+        if blue {
+            label.text = "blue"
+            label.name = "blue"
+        } else {
+            label.text = "yellow"
+            label.name = "yellow"
         }
         
-        // Create shape node to use during mouse interaction
-        let w = (self.size.width + self.size.height) * 0.05
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
+        addChild(label)
+    }
+    
+    func setupTargets() {
         
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 2.5
-            
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
-        }
-    }
-    
-    
-    func touchDown(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.green
-            self.addChild(n)
-        }
-    }
-    
-    func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.blue
-            self.addChild(n)
-        }
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.red
-            self.addChild(n)
-        }
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-        }
+        yellowBin.color = SKColor.yellow
+        yellowBin.size = CGSize(width: 200, height: 200)
+        yellowBin.position = CGPoint(x: 200, y: 1000)
+        yellowBin.zPosition = 1
+        addChild(yellowBin)
         
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
+        blueBin.color = SKColor.blue
+        blueBin.size = CGSize(width: 200, height: 200)
+        blueBin.position = CGPoint(x: 1500, y: 300)
+        blueBin.zPosition = 1
+        addChild(blueBin)
+        
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
+        
+        let touch = touches.first!
+        
+        if label.frame.contains(touch.previousLocation(in: self)){
+            label.position = touch.location(in: self)
+        }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
+        
+        if label.name == "yellow" {
+            if yellowBin.frame.contains(label.position) {
+                //remove and create a new label
+                label.removeFromParent()
+                setupDragLabel()
+            }
+        }
+        
+        if label.name == "blue" {
+            if blueBin.frame.contains(label.position) {
+                //remove and create a new label
+                label.removeFromParent()
+                setupDragLabel()
+            }
+        }
     }
 }
