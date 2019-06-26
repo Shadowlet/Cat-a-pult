@@ -29,9 +29,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let blueBin = SKSpriteNode()
     let yellowBin = SKSpriteNode()
+    
+    var blockOne = SKSpriteNode()
+    var blockTwo = SKSpriteNode()
+    var blockThree = SKSpriteNode()
+    var blockSprite = SKSpriteNode()
+    var buttonSprite = SKReferenceNode()
+    
+    var blockCount: Int = 0
+    var blockArray: [SKSpriteNode] = [SKSpriteNode]()
+
+    
     let label = SKLabelNode()
+    let labelBlock = SKLabelNode()
+    
+    public var blockNum: Int = 0
+    var maxBlocks: Int = 3
+    
+    
     
     override func didMove(to view: SKView) {
+        
+        enumerateChildNodes(withName: "//*", using: { node, _ in
+            if let eventListenerNode = node as? EventListenerNode {
+                eventListenerNode.didMoveToScene()
+            }
+        })
         
         // Playable margin..
         let maxAspectRatio: CGFloat = 16.0/9.0
@@ -41,9 +64,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let playableRect = CGRect(x: 0, y: playableMargin, width: size.width, height: size.height-playableMargin*2)
         
         physicsBody = SKPhysicsBody(edgeLoopFrom: playableRect)
+        physicsWorld.contactDelegate = self
+
         
-        setupDragLabel()
-        setupTargets()
+//        setupDragLabel()
+        setupCreationBlocks()
     }
     
     // We will use this to switch from the menu scene to the game scene
@@ -76,47 +101,152 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(label)
     }
     
-    func setupTargets() {
+    func setupCreationBlocks() {
         
-        yellowBin.color = SKColor.yellow
-        yellowBin.size = CGSize(width: 200, height: 200)
-        yellowBin.position = CGPoint(x: 200, y: 1000)
-        yellowBin.zPosition = 1
-        addChild(yellowBin)
+        blockOne = SKSpriteNode(imageNamed: "wood_horiz1")
+        blockOne.setScale(0.5)
+        blockOne.position = CGPoint(x: 392, y: 1116)
+        blockOne.physicsBody?.isDynamic = false
+        addChild(blockOne)
         
-        blueBin.color = SKColor.blue
-        blueBin.size = CGSize(width: 200, height: 200)
-        blueBin.position = CGPoint(x: 1500, y: 300)
-        blueBin.zPosition = 1
-        addChild(blueBin)
+        blockTwo = SKSpriteNode(imageNamed: "wood_vert1")
+        blockTwo.setScale(0.5)
+        blockTwo.position = CGPoint(x: 960, y: 1116)
+        blockTwo.physicsBody?.isDynamic = false
+        addChild(blockTwo)
+        
+        blockThree = SKSpriteNode(imageNamed: "rock_L_horizontal")
+        blockThree.setScale(0.5)
+        blockThree.position = CGPoint(x: 1500, y: 1076)
+        blockThree.physicsBody?.isDynamic = false
+        addChild(blockThree)
+        
+        labelBlock.fontName = "Arial"
+        labelBlock.fontSize = 140
+        labelBlock.color = SKColor.black
+        labelBlock.position = CGPoint(x: frame.midX, y: frame.midY)
+        labelBlock.text = "\(blockCount)"
+        addChild(labelBlock)
+        
+//        yellowBin.color = SKColor.yellow
+//        yellowBin.size = CGSize(width: 200, height: 200)
+//        yellowBin.position = CGPoint(x: 200, y: 1000)
+//        yellowBin.zPosition = 1
+//        addChild(yellowBin)
+//
+//        blueBin.color = SKColor.blue
+//        blueBin.size = CGSize(width: 200, height: 200)
+//        blueBin.position = CGPoint(x: 1500, y: 300)
+//        blueBin.zPosition = 1
+//        addChild(blueBin)
         
     }
     
+//    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        
+////        let touch = touches.first!
+////        
+//        if label.frame.contains(touch.previousLocation(in: self)){
+//            label.position = touch.location(in: self)
+////        }
+//    }
+//    
+//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        
+////        if label.name == "yellow" {
+////            if yellowBin.frame.contains(label.position) {
+////                //remove and create a new label
+////                label.removeFromParent()
+////                setupDragLabel()
+////            }
+////        }
+////
+////        if label.name == "blue" {
+////            if blueBin.frame.contains(label.position) {
+////                //remove and create a new label
+////                label.removeFromParent()
+////                setupDragLabel()
+////            }
+////        }
+//    }
+    
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
         let touch = touches.first!
         
-        if label.frame.contains(touch.previousLocation(in: self)){
-            label.position = touch.location(in: self)
+        if (currentBlock != nil) {
+            if (currentBlock?.frame.contains(touch.previousLocation(in: self)))! {
+                currentBlock?.position = touch.location(in: self)
+
+            }
         }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print(blockSprite.position)
         
-        if label.name == "yellow" {
-            if yellowBin.frame.contains(label.position) {
-                //remove and create a new label
-                label.removeFromParent()
-                setupDragLabel()
+        //blockSprite.removeFromParent()
+        if blockCount == maxBlocks {
+            for n in 0...maxBlocks-1 {
+                print(n)
+                blockArray[n].physicsBody?.affectedByGravity = true
             }
         }
-        
-        if label.name == "blue" {
-            if blueBin.frame.contains(label.position) {
-                //remove and create a new label
-                label.removeFromParent()
-                setupDragLabel()
-            }
-        }
+        currentBlock = nil
     }
+    
+    func newBlock(touchSpot: UITouch, theThing: String) {
+        
+        blockSprite = SKSpriteNode(imageNamed: theThing)
+        blockSprite.position = touchSpot.location(in: self)
+        blockCount += 1
+        print("block 1")
+        labelBlock.text = "\(blockCount)"
+        currentBlock = blockSprite
+        
+        
+        
+        
+        
+        //block.n("Block\(1)")
+        //blockSprite.physicsBody?.
+        blockSprite.physicsBody = SKPhysicsBody(rectangleOf: blockSprite.size)
+        blockSprite.physicsBody?.isDynamic = true
+        blockSprite.physicsBody?.affectedByGravity = false
+        blockSprite.physicsBody?.node?.name = "BlockNode"
+        blockSprite.zPosition = 10
+        //blockSprite.anchorPoint = CGPoint(x: blockSprite.frame.width/2, y: 0)
+        addChild(blockSprite)
+        blockArray.append(blockSprite)
+        
+        //interact()
+    }
+    
+    var currentBlock: SKSpriteNode?
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        let touch = touches.first!
+        if blockOne.frame.contains(touch.previousLocation(in: self)) {
+            newBlock(touchSpot: touch, theThing: "wood_horiz1")
+        } else if blockTwo.frame.contains(touch.previousLocation(in: self)) {
+            newBlock(touchSpot: touch, theThing: "wood_vert1")
+        } else if blockThree.frame.contains(touch.previousLocation(in: self)) {
+            newBlock(touchSpot: touch, theThing: "rock_L_horizontal")
+        } else {
+            for n in 0...blockCount-1 {
+                if blockArray[n].frame.contains(touch.previousLocation(in: self)) {
+                    currentBlock = blockArray[n]
+                    break
+                }
+            }
+            
+        }
+        
+        
+        
+        
+        
+        
+    }
+    
+    
 }

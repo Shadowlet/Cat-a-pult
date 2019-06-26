@@ -33,6 +33,7 @@
 		E3D1941622BB09F9009B1E3E /* Vector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D1940A22BB09F9009B1E3E /* Vector3.swift */; };
 		E3D1941722BB09F9009B1E3E /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D1940B22BB09F9009B1E3E /* CGFloat+Extensions.swift */; };
 		E3D1941922BB0FA2009B1E3E /* CatNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D1941822BB0FA2009B1E3E /* CatNode.swift */; };
+		E3F8A78C22BD9205005EFC20 /* BlockNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F8A78B22BD9205005EFC20 /* BlockNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,7 @@
 		E3D1940A22BB09F9009B1E3E /* Vector3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector3.swift; sourceTree = "<group>"; };
 		E3D1940B22BB09F9009B1E3E /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
 		E3D1941822BB0FA2009B1E3E /* CatNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatNode.swift; sourceTree = "<group>"; };
+		E3F8A78B22BD9205005EFC20 /* BlockNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				E354BF4C22BAFC1B001E3A9D /* AppDelegate.swift */,
+				E3F8A78B22BD9205005EFC20 /* BlockNode.swift */,
 				E354BF5222BAFC1B001E3A9D /* GameScene.swift */,
 				E354BF8322BB039D001E3A9D /* CatapultNode.swift */,
 				E3D1941822BB0FA2009B1E3E /* CatNode.swift */,
@@ -350,6 +353,7 @@
 				E3694E8422BC4B7E00FA0C6A /* GameViewController.swift in Sources */,
 				E354BF4D22BAFC1B001E3A9D /* AppDelegate.swift in Sources */,
 				E3D1940F22BB09F9009B1E3E /* SKTTimingFunctions.swift in Sources */,
+				E3F8A78C22BD9205005EFC20 /* BlockNode.swift in Sources */,
 				E3D1941222BB09F9009B1E3E /* SKNode+Extensions.swift in Sources */,
 				E3D1941122BB09F9009B1E3E /* SKAction+SpecialEffects.swift in Sources */,
 				E3D1941922BB0FA2009B1E3E /* CatNode.swift in Sources */,
