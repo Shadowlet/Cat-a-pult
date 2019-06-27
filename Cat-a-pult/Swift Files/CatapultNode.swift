@@ -1,35 +1,26 @@
-//
-//  Catapult.swift
-//  Cat-a-pult
-//
-//  Created by Zachary Carreiro on 2019-06-19.
-//  Copyright © 2019 Team Cat. All rights reserved.
-//
-
 import SpriteKit
 
-class CatapultNode: SKSpriteNode, EventListenerNode, InteractiveNode {
+class CatapultNode: SKSpriteNode, EventListenerNode {
     
     var catapult: SKSpriteNode!
     var cat: SKSpriteNode!
     private var xFloat: CGFloat?
     private var yFloat: CGFloat?
     
+    let oneRevolution = SKAction.rotate(byAngle: CGFloat.pi * -2, duration: 3)
+
+    
     
     func didMoveToScene() {
         //let catapultBodyTexture = SKTexture(imageNamed: "catapult")
+        
+        
     }
-    func interact() {
-        isUserInteractionEnabled = false
-    }
-    
+
     func update(_ currentTime: TimeInterval) {
-        
+        self.run(oneRevolution)
     }
-    
-    private func launchCat(cannonY: CGFloat) {
-        
-    }
+
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         

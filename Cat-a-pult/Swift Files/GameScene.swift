@@ -27,11 +27,15 @@ struct PhysicsCategory {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-    let blueBin = SKSpriteNode()
-    let yellowBin = SKSpriteNode()
-    let label = SKLabelNode()
+    
     
     override func didMove(to view: SKView) {
+        
+        enumerateChildNodes(withName: "//*", using: { node, _ in
+            if let eventListenerNode = node as? EventListenerNode {
+                eventListenerNode.didMoveToScene()
+            }
+        })
         
         // Playable margin..
         let maxAspectRatio: CGFloat = 16.0/9.0
@@ -42,8 +46,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         physicsBody = SKPhysicsBody(edgeLoopFrom: playableRect)
         
-        setupDragLabel()
-        setupTargets()
     }
     
     // We will use this to switch from the menu scene to the game scene
@@ -55,68 +57,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return scene
     }
     
-    func setupDragLabel() {
-        //set the font and position of the label
-        label.fontName = "Arial"
-        label.fontSize = 140
-        label.color = SKColor.black
-        label.position = CGPoint(x: frame.midX, y: frame.midY)
-        
-        // Get a random bool
-        let blue = Bool.random()
-        
-        if blue {
-            label.text = "blue"
-            label.name = "blue"
-        } else {
-            label.text = "yellow"
-            label.name = "yellow"
-        }
-        
-        addChild(label)
-    }
-    
-    func setupTargets() {
-        
-        yellowBin.color = SKColor.yellow
-        yellowBin.size = CGSize(width: 200, height: 200)
-        yellowBin.position = CGPoint(x: 200, y: 1000)
-        yellowBin.zPosition = 1
-        addChild(yellowBin)
-        
-        blueBin.color = SKColor.blue
-        blueBin.size = CGSize(width: 200, height: 200)
-        blueBin.position = CGPoint(x: 1500, y: 300)
-        blueBin.zPosition = 1
-        addChild(blueBin)
-        
-    }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        let touch = touches.first!
-        
-        if label.frame.contains(touch.previousLocation(in: self)){
-            label.position = touch.location(in: self)
-        }
+
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        if label.name == "yellow" {
-            if yellowBin.frame.contains(label.position) {
-                //remove and create a new label
-                label.removeFromParent()
-                setupDragLabel()
-            }
-        }
-        
-        if label.name == "blue" {
-            if blueBin.frame.contains(label.position) {
-                //remove and create a new label
-                label.removeFromParent()
-                setupDragLabel()
-            }
-        }
+
     }
 }
