@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A412E39C22C531C70017E8E5 /* Scene0.sks in Resources */ = {isa = PBXBuildFile; fileRef = A412E39B22C531C70017E8E5 /* Scene0.sks */; };
+		A41432AE22CEB5FA0061E666 /* StartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41432AD22CEB5FA0061E666 /* StartButton.swift */; };
 		A4D0602A22BFCB6E009A1226 /* brick_2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A4D0600B22BFCB6E009A1226 /* brick_2-hd.png */; };
 		A4D0602B22BFCB6E009A1226 /* catapult_arm-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A4D0600C22BFCB6E009A1226 /* catapult_arm-hd.png */; };
 		A4D0602C22BFCB6E009A1226 /* brick_3.png in Resources */ = {isa = PBXBuildFile; fileRef = A4D0600D22BFCB6E009A1226 /* brick_3.png */; };
@@ -84,6 +86,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A412E39B22C531C70017E8E5 /* Scene0.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Scene0.sks; sourceTree = "<group>"; };
+		A41432AD22CEB5FA0061E666 /* StartButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartButton.swift; sourceTree = "<group>"; };
 		A4D0600B22BFCB6E009A1226 /* brick_2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "brick_2-hd.png"; sourceTree = "<group>"; };
 		A4D0600C22BFCB6E009A1226 /* catapult_arm-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "catapult_arm-hd.png"; sourceTree = "<group>"; };
 		A4D0600D22BFCB6E009A1226 /* brick_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = brick_3.png; sourceTree = "<group>"; };
@@ -274,6 +278,7 @@
 				E354BF8322BB039D001E3A9D /* CatapultNode.swift */,
 				E3D1941822BB0FA2009B1E3E /* CatNode.swift */,
 				E3694E8322BC4B7E00FA0C6A /* GameViewController.swift */,
+				A41432AD22CEB5FA0061E666 /* StartButton.swift */,
 			);
 			path = "Swift Files";
 			sourceTree = "<group>";
@@ -281,6 +286,7 @@
 		E3694E8922BC4D7F00FA0C6A /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				A412E39B22C531C70017E8E5 /* Scene0.sks */,
 				E3694E8722BC4D7C00FA0C6A /* Scene2.sks */,
 				E354BF4E22BAFC1B001E3A9D /* Scene3.sks */,
 				A4D0604922BFD458009A1226 /* catapult.sks */,
@@ -445,6 +451,7 @@
 				E354BF5122BAFC1B001E3A9D /* Actions.sks in Resources */,
 				A4D0603822BFCB6E009A1226 /* catapult_base_1-hd.png in Resources */,
 				A4D0602A22BFCB6E009A1226 /* brick_2-hd.png in Resources */,
+				A412E39C22C531C70017E8E5 /* Scene0.sks in Resources */,
 				A4D0604722BFCB6E009A1226 /* bg-hd.png in Resources */,
 				A4D0602D22BFCB6E009A1226 /* brick_2.png in Resources */,
 				E3694E8822BC4D7C00FA0C6A /* Scene2.sks in Resources */,
@@ -479,6 +486,7 @@
 				E354BF5322BAFC1B001E3A9D /* GameScene.swift in Sources */,
 				E3D1940D22BB09F9009B1E3E /* CGVector+Extensions.swift in Sources */,
 				E3D1940E22BB09F9009B1E3E /* Int+Extensions.swift in Sources */,
+				A41432AE22CEB5FA0061E666 /* StartButton.swift in Sources */,
 				E3694E8422BC4B7E00FA0C6A /* GameViewController.swift in Sources */,
 				E354BF4D22BAFC1B001E3A9D /* AppDelegate.swift in Sources */,
 				E3D1940F22BB09F9009B1E3E /* SKTTimingFunctions.swift in Sources */,
