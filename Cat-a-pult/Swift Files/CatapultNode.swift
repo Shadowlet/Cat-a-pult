@@ -1,6 +1,6 @@
 import SpriteKit
 
-class CatapultNode: SKSpriteNode, EventListenerNode {
+class CatapultNode: SKSpriteNode{
     
     var catapult: SKSpriteNode!
     var cat: SKSpriteNode!

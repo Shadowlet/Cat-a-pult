@@ -1,11 +1,3 @@
-//
-//  StartButton.swift
-//  Cat-a-pult
-//
-//  Created by Epik Kat on 2019-07-04.
-//  Copyright © 2019 Team Cat. All rights reserved.
-//
-
 import SpriteKit
 
 class StartButton: SKSpriteNode{
@@ -16,8 +8,9 @@ class StartButton: SKSpriteNode{
     }
     
     func startGame() {
-        let scene = GameScene(fileNamed: "Scene2")
+        let scene = GameScene(fileNamed: "Scene0")
         scene!.scaleMode = .aspectFill
+        
         return
     }
     
