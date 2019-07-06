@@ -17,12 +17,12 @@ protocol InteractiveNode {
 }
 
 struct PhysicsCategory {
-    static let None: UInt32 = 0
-    static let Cat: UInt32 = 0b1 // 1
+    static let None:  UInt32 = 0
+    static let All:   UInt32 = 0xFFFFFFFF
+    static let Cat:   UInt32 = 0b1 // 1
     static let Block: UInt32 = 0b10 // 2
-    static let Edge: UInt32 = 0b100 // 4
-    static let Cannon: UInt32 = 0b1000 // 8
-    static let King: UInt32 = 0b10000 // 16
+    static let Edge:  UInt32 = 0b100 // 4
+    static let King:  UInt32 = 0b10000 // 16
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
@@ -30,9 +30,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let blueBin = SKSpriteNode()
     let yellowBin = SKSpriteNode()
     
+    // Make more blocks to choose from here
     var blockOne = SKSpriteNode()
     var blockTwo = SKSpriteNode()
     var blockThree = SKSpriteNode()
+    var blockFour = SKSpriteNode()
+    var blockFive = SKSpriteNode()
+    //
+    //
+    var cat = SKSpriteNode()
+    //
+    //
     var blockSprite = SKSpriteNode()
     var buttonSprite = SKReferenceNode()
     
@@ -41,7 +49,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     
     let label = SKLabelNode()
-    
+    var rect = CGRect()
     
     // UI
     var buttonFinish = SKShapeNode(circleOfRadius: 100)
@@ -49,7 +57,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let labelBlock = SKLabelNode()
     
     public var blockNum: Int = 0
-    var maxBlocks: Int = 3
+    var maxBlocks: Int = 5
+    var playerCounter: Int = 0
     
     
     
@@ -69,8 +78,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let playableRect = CGRect(x: 0, y: playableMargin, width: size.width, height: size.height-playableMargin*2)
         
         physicsBody = SKPhysicsBody(edgeLoopFrom: playableRect)
+        
         physicsWorld.contactDelegate = self
-
+        physicsBody!.categoryBitMask = PhysicsCategory.Edge        //
+        //
+        rect = playableRect
         
 //        setupDragLabel()
         //setupCreationBlocks()
@@ -131,7 +143,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let maxAspectRatioHeight = size.width / maxAspectRatio
         let playableMargin: CGFloat = (size.height - maxAspectRatioHeight)/2
         
-        blockHUD.color = SKColor.white
+        blockHUD.color = SKColor.blue
         blockHUD.size = CGSize(width: size.width, height: size.height * 0.15)
         blockHUD.position = CGPoint(x: size.width/2, y: size.height-playableMargin*1.60)
         blockHUD.zPosition = 1
@@ -143,7 +155,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         buttonFinish.fillColor = UIColor.red
         addChild(buttonFinish)
         
-        blockOne = SKSpriteNode(imageNamed: "wood_horiz1")
+        blockOne = SKSpriteNode(imageNamed: "Rubber2")
         blockOne.setScale(0.5)
         blockOne.position = CGPoint(x: 300, y: 1225)
         blockOne.zPosition = 2
@@ -151,7 +163,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(blockOne)
         //
         //
-        blockTwo = SKSpriteNode(imageNamed: "wood_vert1")
+        blockTwo = SKSpriteNode(imageNamed: "Wood3")
         blockTwo.setScale(0.5)
         blockTwo.position = CGPoint(x: 600, y: 1225)
         blockTwo.zPosition = 2
@@ -159,12 +171,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(blockTwo)
         //
         //
-        blockThree = SKSpriteNode(imageNamed: "rock_L_horizontal")
+        blockThree = SKSpriteNode(imageNamed: "Steel4")
         blockThree.setScale(0.5)
         blockThree.position = CGPoint(x: 900, y: 1225)
         blockThree.zPosition = 2
         blockThree.physicsBody?.isDynamic = false
         addChild(blockThree)
+        
+        blockFour = SKSpriteNode(imageNamed: "Glass3")
+        blockFour.setScale(0.5)
+        blockFour.position = CGPoint(x: 1200, y: 1225)
+        blockFour.zPosition = 2
+        blockFour.physicsBody?.isDynamic = false
+        addChild(blockFour)
+        
+        blockFive = SKSpriteNode(imageNamed: "Wood2")
+        blockFive.setScale(0.5)
+        blockFive.position = CGPoint(x: 1500, y: 1225)
+        blockFive.zPosition = 2
+        blockFive.physicsBody?.isDynamic = false
+        addChild(blockFive)
        
         
         labelBlock.fontName = "Arial"
@@ -203,6 +229,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 ////        }
 //    }
     
+    func didBegin(_ contact: SKPhysicsContact) {
+        
+    }
+    
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first!
         
@@ -224,7 +254,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             for n in 0...blockCount-1 {
                 print(n)
                 blockArray[n].physicsBody?.affectedByGravity = true
+                
+                blockArray[n].physicsBody?.categoryBitMask = PhysicsCategory.Block
+                blockArray[n].physicsBody?.collisionBitMask = PhysicsCategory.All
+                
             }
+            playerCounter+=1
+            
+            cat = SKSpriteNode(imageNamed: "OrangeCat")
+            cat.position = CGPoint(x:rect.midX, y: rect.midY)
+            cat.zPosition = 10
+            cat.physicsBody = SKPhysicsBody(rectangleOf: cat.size)
+            cat.physicsBody?.isDynamic = true
+            cat.physicsBody?.affectedByGravity = true
+            cat.physicsBody?.categoryBitMask = PhysicsCategory.Cat
+            cat.physicsBody?.collisionBitMask = PhysicsCategory.Block
+            addChild(cat)
         }
         currentBlock = nil
         
@@ -263,11 +308,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         super.touchesBegan(touches, with: event)
         let touch = touches.first!
         if blockOne.frame.contains(touch.previousLocation(in: self)) {
-            newBlock(touchSpot: touch, theThing: "wood_horiz1")
+            newBlock(touchSpot: touch, theThing: "Rubber2")
         } else if blockTwo.frame.contains(touch.previousLocation(in: self)) {
-            newBlock(touchSpot: touch, theThing: "wood_vert1")
+            newBlock(touchSpot: touch, theThing: "Wood3")
         } else if blockThree.frame.contains(touch.previousLocation(in: self)) {
-            newBlock(touchSpot: touch, theThing: "rock_L_horizontal")
+            newBlock(touchSpot: touch, theThing: "Steel4")
+        } else if blockFour.frame.contains(touch.previousLocation(in: self)) {
+                newBlock(touchSpot: touch, theThing: "Glass3")
+        } else if blockFive.frame.contains(touch.previousLocation(in: self)) {
+                newBlock(touchSpot: touch, theThing: "Wood2")
         } else {
             
             if blockCount >= 1 {
